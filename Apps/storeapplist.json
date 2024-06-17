@@ -1,0 +1,16 @@
+{
+	"name":"Genesis_Store",
+	"version":"1.0.0",
+	"header":{
+		[
+			{
+				"charset":"utc-8"
+			}
+		]
+	},
+	"entries":{
+		[
+			{"test.lua":"Apps/test.lua","dependencies":"nil"}
+		]
+	}
+}
