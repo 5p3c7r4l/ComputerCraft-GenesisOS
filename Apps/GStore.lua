@@ -46,7 +46,7 @@ local function update (list)
 		return applist
 	else
 		currentlist = io.input('Apps/storeapplist.json'):read('a')
-        return JSON.parse(currentlist)
+        return JSON.parse(currentlist,2)
 	end
 end
 
@@ -73,7 +73,8 @@ local App = {
 
 
 local function main (arg,flag)
-    local apps,msg,userInput,event,x,y
+    local apps = {}
+    local msg,userInput,event,x,y
 
     apps,arg,msg = App['load']()
 
@@ -83,6 +84,10 @@ local function main (arg,flag)
     event, userInput, x, y = os.pullEvent('monitor_touch')
         if (flag == '0x10') then
             print('enter program')
+            for i,j in pairs(apps) do 
+                print(i)
+            end
+
             print(event,userInput,x,y)
         elseif(flag == '0x80') then
             return arg

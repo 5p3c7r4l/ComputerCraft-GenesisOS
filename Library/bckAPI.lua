@@ -28,8 +28,8 @@ function gbck.drawBck (addLogo)
 		listSetup(addLogo)
 		local y = 1
 		for i=1, #currentLogos do
-		local Width = MonW/(currentLogoPos[y]/100)
-		local Height = MonH/(currentLogoPos[y+1]/100)
+		local Width = (MonW/2)-currentLogoPos[y]/2
+		local Height = (MonH/2)-currentLogoPos[y+1]/2
 			paintutils.drawImage(paintutils.loadImage(currentLogos[i]),Width,Height)
 			y= y+2
 		end
@@ -45,8 +45,8 @@ function gbck.OSLogo (addLogo)
 	if (addLogo) then
 		listSetup(addLogo)
 		local y = 1
-		local Width = MonW/(280/100)
-		local Height = MonH/(300/100)
+		local Width = (MonW/2)-10
+		local Height = (MonH/2)-6
 		for i=1, #currentLogos do
 			paintutils.drawImage(paintutils.loadImage(currentLogos[i]),Width,Height)
 			y= y+2
@@ -60,8 +60,8 @@ function gbck.Shutdown (addLogo)
 	if (addLogo) then
 		listSetup(addLogo)
 		local y = 1
-		local Width = MonW/(575/100)
-		local Height = MonH/(450/100)
+		local Width = (MonW/2)-(45/2)
+		local Height = (MonH/2)-8
 		paintutils.drawImage(paintutils.loadImage('Background/OS_SHUTDOWN.nfp'),Width,Height)
 	end
 end

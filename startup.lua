@@ -52,7 +52,7 @@ end
 local function desktopBoot ()
     AppLoad()
     monitor.setCursorPos(1,1)
-    i = 0
+    local i = 0
     for line in io.lines('Apps/applist.txt') do
         currentListApp[i] = line
         i = i+1
