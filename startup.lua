@@ -2,11 +2,9 @@ local gbck = require('Library.bckAPI')
 local mon = require('Library.monitor')
 
 
-local currentPC = peripheral.find('computer')
-local monitor = peripheral.find('monitor')
+local MonW, MonH, monitor, peripheral = gbck.findPeripheral()
 local currentListApp = {}
 currentBCK = "Background/OS_BCK.nfp"
-local MonW, MonH = monitor.getSize()
 local opennedTab = 1
 local Boot = false
 local shutdown = false
@@ -15,7 +13,6 @@ local onBootImg = paintutils.loadImage('Background/OS_STARTUP.nfp')
 local amountProcess = 1
 local bckLogo = true
 local rerender = true
-
 
 local function onBoot ()
     term.setBackgroundColor(colors.black)
@@ -71,7 +68,11 @@ function AppLoad ()
     end
     appPath()
     if Boot then
-        event, flag, x, y = os.pullEvent('monitor_touch')
+        if (peripheral == 'monitor') then
+            event, flag, x, y = os.pullEvent('monitor_touch')
+        else
+            event, flag, x, y = os.pullEvent('mouse_click')
+        end
     end
 end
 

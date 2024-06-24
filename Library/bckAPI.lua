@@ -5,9 +5,29 @@ local logoPath = 'Background/logoPath.txt'
 local logoPos = 'Background/logoPos.txt'
 local currentLogos = {}
 local currentLogoPos = {}
-local MonW, MonH = peripheral.find('monitor').getSize()
+local MonW, MonH
+local monitor
 
 local gbck = {}
+
+function gbck.findPeripheral()
+    local testPeriph = peripheral.getNames()
+    for i=1, #testPeriph do
+        if peripheral.getType(testPeriph[i]) == 'monitor' then
+            testPeriph = peripheral.getType(testPeriph[i])
+            break
+        end
+    end
+    if (testPeriph == 'monitor') then
+        monitor = peripheral.find('monitor')
+        MonW, MonH = monitor.getSize()
+    else
+        monitor = term.current()
+        MonW, MonH = monitor.getSize()
+        testPeriph = 'computer'
+    end
+    return MonW,MonH,monitor, testPeriph
+end
 
 local function listSetup (addLogo)
 	for line in io.lines(logoPath) do
