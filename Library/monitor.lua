@@ -3,7 +3,7 @@ local Width,Height = term.getSize(term.current())
 
 local mon = {}
 
-function mon.space(x,y,xCorner,yCorner,XCornerDisplace,YCornerDisplace,content,iContent)
+function mon.area(x,y,xCorner,XCornerDisplace,yCorner,YCornerDisplace,Callback,iCallback)
 
 
     if (x == nil) then x = Width end
@@ -18,14 +18,15 @@ function mon.space(x,y,xCorner,yCorner,XCornerDisplace,YCornerDisplace,content,i
 
     if (XCornerDisplace == nil) then XCornerDisplace = 0 end
 
-    if (iContent == nil) then iContent = (function()end) end
+    if (iCallback == nil) then iCallback = (function()end) end
 
-    if (content == nil) then error("ERROR: Expected content") end
+    if (Callback == nil) then error("ERROR: Expected content") end
 
-    if (x >= xCorner and x <= xCorner + XCornerDisplace and y >= yCorner and y <= yCorner + YCornerDisplace) then
-        content()
+
+    if (x >= xCorner and x <= XCornerDisplace and y <= yCorner and y >= YCornerDisplace) then
+        Callback()
     else
-        iContent()
+        iCallback()
     end
 
 end

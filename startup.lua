@@ -1,4 +1,4 @@
-local gbck = require('Library.bckAPI')
+local gbck = require('Library.gbck')
 local mon = require('Library.monitor')
 
 
@@ -14,7 +14,7 @@ local amountProcess = 1
 local bckLogo = true
 local rerender = true
 
-local function onBoot ()
+local onBoot = (function()
     term.setBackgroundColor(colors.black)
     term.clear()
     gbck.OSLogo(true)
@@ -34,10 +34,11 @@ local function onBoot ()
     os.sleep(0.25)
     term.setCursorPos(1,MonH)
     term.setBackgroundColor(colors.black)
+    term.setTextColor(colors.white)
     term.write('Welcome =D')
     os.sleep(1)
     term.setCursorPos(1,1)
-end
+end)
 
 
 local function isBooted ()
@@ -63,10 +64,10 @@ function AppLoad ()
     if (rerender) then
         paintutils.drawFilledBox(1,1,MonW+2,MonH+2,colors.black)
         gbck.drawBck(bckLogo)
-        icons()
+        Icons()
         rerender = false
     end
-    appPath()
+    AppPath()
     if Boot then
         if (peripheral == 'monitor') then
             event, flag, x, y = os.pullEvent('monitor_touch')
@@ -76,7 +77,7 @@ function AppLoad ()
     end
 end
 
-function appPath ()
+AppPath = (function()
     local currX = 1
     local currY = 1
 
@@ -87,7 +88,7 @@ function appPath ()
                 else
                     rerender = true
                     window.create(term.current(),1,1,MonW,MonH)
-                    os.run({},currentListApp[i])
+                    shell.run(currentListApp[i])
                 end
             end
         end
@@ -97,7 +98,7 @@ function appPath ()
             currX = 1
         end
     end
-end
+end)
 
 
 local function shutdownEvent ()
@@ -119,7 +120,7 @@ local function shutdownEvent ()
     end
 end
 
-function icons ()
+Icons = (function()
     local currX = 1
     local currY = 1
     for i=0, #currentListApp do
@@ -130,10 +131,10 @@ function icons ()
             currX = 1
         end
     end
-end
+end)
 
-local function newApp(appPath)
-    io.output('Apps/applist'):write(appPath)
+local function newApp(AppPath)
+    io.output('Apps/applist'):write(AppPath)
 end
 
 
@@ -149,7 +150,7 @@ local Apps = {
     ['makeApp'] = newApp
 }
 
-local function main (options)
+local main = (function(options)
 
     local content = (function()
             Apps['load_apps']()
@@ -177,6 +178,5 @@ local function main (options)
     term.setBackgroundColor(colors.black)
     term.clear()
     os.shutdown()
-end
-
+end)
 main()

@@ -3,10 +3,11 @@
 ------------
 local JSON = require('/Library.JSONParser')
 local mon = require('/Library.monitor')
+local gbck = require('/Library.gbck')
 
 local flag = '0x00'
 local arg = '0x00'
-local MonW,MonH = term.getSize(term.current())
+local MonW,MonH = gbck.findPeripheral()
 local API = 'https://httpcats.com/101.json'
 
 
