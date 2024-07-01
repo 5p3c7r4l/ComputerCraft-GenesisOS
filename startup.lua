@@ -2,7 +2,7 @@ local gbck = require('Library.gbck')
 local mon = require('Library.monitor')
 
 
-local MonW, MonH, monitor, peripheral = gbck.findPeripheral()
+local MonW, MonH, monitor, peripheral, currentDEL = gbck.findPeripheral()
 local currentListApp = {}
 currentBCK = "Background/OS_BCK.nfp"
 local opennedTab = 1
@@ -69,11 +69,7 @@ function AppLoad ()
     end
     AppPath()
     if Boot then
-        if (peripheral == 'monitor') then
-            event, flag, x, y = os.pullEvent('monitor_touch')
-        else
-            event, flag, x, y = os.pullEvent('mouse_click')
-        end
+        event, flag, x, y = os.pullEvent(currentDEL)
     end
 end
 

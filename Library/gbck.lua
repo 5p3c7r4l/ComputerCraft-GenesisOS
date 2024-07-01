@@ -12,6 +12,7 @@ local gbck = {}
 
 function gbck.findPeripheral()
     local testPeriph = peripheral.getNames()
+    local currentDeviceEventListener
     for i=1, #testPeriph do
         if peripheral.getType(testPeriph[i]) == 'monitor' then
             testPeriph = peripheral.getType(testPeriph[i])
@@ -21,12 +22,14 @@ function gbck.findPeripheral()
     if (testPeriph == 'monitor') then
         monitor = peripheral.find('monitor')
         MonW, MonH = monitor.getSize()
+        currentDeviceEventListener = 'monitor_touch'
     else
         monitor = term.current()
         MonW, MonH = monitor.getSize()
         testPeriph = 'computer'
+        currentDeviceEventListener = 'mouse_click'
     end
-    return MonW,MonH,monitor, testPeriph
+    return MonW,MonH,monitor,testPeriph,currentDeviceEventListener
 end
 
 local function listSetup (addLogo)

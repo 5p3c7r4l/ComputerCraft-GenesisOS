@@ -1,9 +1,8 @@
 local gbck = require('/Library.gbck')
 local Utils = require('/Library.appbuilder')
 
-local useState = Utils.useState
-local MonW,MonH,monitor = gbck.findPeripheral()
-local appstate = useState(false)
+local MonW,MonH,monitor,peripheral,currentDEL = gbck.findPeripheral()
+local appstate = Utils.useState(false)
 local firstboot = true
 local event, handle, x, y
 
@@ -13,7 +12,7 @@ term.setTextColor(colours.white)
 
 local shutdown = (function()
     term.setCursorPos(1,1)
-    appstate = useState(true)
+    appstate.setState(true)
     term.setBackgroundColor(colors.black)
     term.clear()
 end)
@@ -34,7 +33,9 @@ repeat
     if firstboot then
         firstboot = false
     else
-        event, handle, x, y = os.pullEvent('monitor_touch')
+        local event2, handle2, x2, y2 = os.pullEvent('mouse_drag')
+        print(handle,event,x,y)
+        print(handle2,event2,x2,y2)
     end
     Utils.button(x,y,1,5,MonH+1,MonH-2,colors.purple,eventListener['shutdown'],nil,'hello')
 until appstate.state
