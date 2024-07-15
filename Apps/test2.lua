@@ -1,14 +1,17 @@
 local gbck = require('/Library.gbck')
 local Utils = require('/Library.appbuilder')
 
+
 local MonW,MonH,monitor,peripheral,currentDEL = gbck.findPeripheral()
 local appstate = Utils.useState(false)
 local firstboot = true
 local event, handle, x, y
 
 term.setBackgroundColor(colours.black)
-term.setTextColor(colours.white)
 
+
+term.setBackgroundColor(colours.black)
+term.setTextColor(colours.white)
 
 local shutdown = (function()
     term.setCursorPos(1,1)
@@ -18,7 +21,8 @@ local shutdown = (function()
 end)
 
 local co = coroutine.create(function()
-    print('using coroutine')
+    local pixel = {true, false, true, true, false, true}
+    gbck.HDpixel(pixel,3,3,colors.white, colors.red)
     coroutine.yield()
 end)
 
@@ -29,13 +33,14 @@ local eventListener = {
 }
 
 repeat
-    eventListener['cr'](co)
     if firstboot then
         firstboot = false
     else
-        local event2, handle2, x2, y2 = os.pullEvent('mouse_drag')
-        print(handle,event,x,y)
-        print(handle2,event2,x2,y2)
+        eventListener['cr'](co)
+        event, handle, x, y = os.pullEvent(currentDEL)
+        --eventListener['shutdown']()
+        term.setCursorPos(1,1)
+        paintutils.drawPixel(x,y,colours.white)
     end
     Utils.button(x,y,1,5,MonH+1,MonH-2,colors.purple,eventListener['shutdown'],nil,'hello')
 until appstate.state

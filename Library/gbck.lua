@@ -23,6 +23,7 @@ function gbck.findPeripheral()
         monitor = peripheral.find('monitor')
         MonW, MonH = monitor.getSize()
         currentDeviceEventListener = 'monitor_touch'
+        monitor.setTextScale(0.5)
     else
         monitor = term.current()
         MonW, MonH = monitor.getSize()
@@ -87,6 +88,53 @@ function gbck.Shutdown (addLogo)
 		local Height = (MonH/2)-8
 		paintutils.drawImage(paintutils.loadImage('Background/OS_SHUTDOWN.nfp'),Width,Height)
 	end
+end
+
+
+function gbck.HDpixel (listOfPixel,x,y,pColor,sColor)
+    if #listOfPixel == 6 then
+        for i,v in pairs(listOfPixel) do
+            if v == nil then
+                goto ending
+            end
+        end
+        term.setCursorPos(x,y)
+    else
+        goto ending
+    end
+
+
+    local buffer = 0
+    if listOfPixel[6] then
+        goto inverted
+    else
+        goto normal
+    end
+
+    ::normal::
+    for i = 0, #listOfPixel do
+        if listOfPixel[i+1] then
+            buffer = buffer + 2^i
+        end
+    end
+    term.setTextColor(pColor)
+    term.setBackgroundColor(sColor)
+    term.setCursorPos(x,y)
+    term.write(string.char(128+buffer))
+    goto ending
+
+    ::inverted::
+    for i = 0, #listOfPixel do
+        if listOfPixel[i+1] == false then
+            buffer = buffer + 2^i
+        end
+    end
+    term.setTextColor(sColor)
+    term.setBackgroundColor(pColor)
+    term.setCursorPos(x,y)
+    term.write(string.char(128+buffer))
+
+    ::ending::
 end
 
 return gbck
