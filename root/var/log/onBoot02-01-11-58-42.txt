@@ -1,0 +1,2 @@
+Screen: monitor [left]
+BootFlags: 0X01
